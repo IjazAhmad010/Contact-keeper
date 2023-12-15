@@ -29,8 +29,9 @@ router.post(
     const { name, email, password } = req.body;
     try {
       let user = await User.findOne({ email });
+
       if (user) {
-        return res.status(400).json({ msg: 'User alredy exist' });
+        return res.status(400).json({ msg: 'User alredy exists' });
       }
       user = new User({
         name,
@@ -59,8 +60,8 @@ router.post(
         }
       );
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server error');
+      console.log(err);
+      res.status(500).send(err);
     }
   }
 );

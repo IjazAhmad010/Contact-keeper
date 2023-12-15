@@ -37,6 +37,8 @@ router.post(
     }
 
     const { email, password } = req.body;
+
+    console.log(email, password);
     try {
       let user = await User.findOne({ email });
 
@@ -65,7 +67,7 @@ router.post(
         }
       );
     } catch (err) {
-      console.error(err.message);
+      console.log(err);
       res.status(500).send('Server error');
     }
   }

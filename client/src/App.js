@@ -1,26 +1,50 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/layouts/Navbar';
 import Home from './components/pages/Home';
 import About from './components/pages/About';
-import './App.css';
+import Register from './components/auth/Register';
+import Login from './components/auth/Login';
+import Alerts from './components/layouts/Alerts';
+
 import ContactState from './context/contact/ContactState';
+import AuthtState from './context/auth/AuthState';
+import AlertState from './context/alert/Alertstate';
+import setAuthToken from './utils/setAuthToken';
+import PrivateRoute from './components/routing/PrivateRoute';
+import './App.css';
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
   return (
-    <ContactState>
-      <Router>
-        <Fragment>
-          <Navbar />
-          <div className='container'>
-            <Routes>
-              <Route exact path='/' Component={Home} />
-              <Route exact path='/about' Component={About} />
-            </Routes>
-          </div>
-        </Fragment>
-      </Router>
-    </ContactState>
+    <AuthtState>
+      <ContactState>
+        <AlertState>
+          <Router>
+            <Navbar />
+            <div className='container'>
+              <Alerts />
+              <Routes>
+                <Route path='/about' element={<About />} />
+                <Route path='/register' element={<Register />} />
+                <Route path='/login' element={<Login />} />
+                <Route
+                  path='/'
+                  element={
+                    <PrivateRoute>
+                      <Home />
+                    </PrivateRoute>
+                  }
+                />
+              </Routes>
+            </div>
+          </Router>
+        </AlertState>
+      </ContactState>
+    </AuthtState>
   );
 };
 

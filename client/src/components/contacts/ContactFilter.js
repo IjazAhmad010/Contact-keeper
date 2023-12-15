@@ -7,12 +7,12 @@ const ContactFilter = () => {
   const { filterContacts, clearFilter, filtered } = contactContext;
   useEffect(() => {
     if (filtered === null) {
-      text.current.vlaue = '';
+      text.current.value = '';
     }
   });
 
   const onChange = e => {
-    if (text.current.vlaue !== '') {
+    if (text.current.value !== '') {
       filterContacts(e.target.value);
     } else {
       clearFilter();
